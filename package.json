@@ -1,14 +1,14 @@
 {
   "name": "backend-sqlite",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API REST para administrar productos con Node.js, Express y SQLite.",
+  "main": "src/app.js",
   "scripts": {
-  "start": "node src/app.js",
-  "seed": "node scripts/seed.js"
-},
+    "start": "node src/app.js",
+    "seed": "node scripts/seed.js"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Gabriel Ernesto Gonzalez Palomo, Josue de Jesus Anzueto Reyes, Carlos Rafael Mendez Gonzalez y Raul Eduardo Cobarrubias Ballester",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {

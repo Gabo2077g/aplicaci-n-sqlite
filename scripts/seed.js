@@ -15,6 +15,7 @@ db.prepare(`
 
 // Limpiar registros anteriores para evitar duplicados
 db.prepare("DELETE FROM productos").run();
+db.prepare("DELETE FROM sqlite_sequence WHERE name = 'productos'").run();
 
 // Preparar sentencia de inserción
 const insertarProducto = db.prepare(`
@@ -50,3 +51,4 @@ insertarProducto.run(
 
 // Confirmar creación de la base de datos
 console.log("Base de datos creada correctamente.");
+db.close();

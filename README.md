@@ -71,14 +71,23 @@ La aplicación está diseñada para ejecutarse localmente y servir como ejemplo 
 
 ---
 
+# Requisitos para la Ejecución
+
+- Tener Node.js y npm instalados.
+- Ejecutar los comandos desde una terminal dentro de la carpeta del proyecto.
+- Crear y poblar la base de datos con `npm run seed` antes de iniciar el servidor.
+
+---
+
 # Estructura del Proyecto
 
 ```
 backend-sqlite/
 │
+├── .gitignore
 ├── package.json
+├── package-lock.json
 ├── README.md
-├── database.db
 │
 ├── src/
 │   ├── app.js
@@ -89,6 +98,8 @@ backend-sqlite/
 └── scripts/
     └── seed.js
 ```
+
+El archivo `database.db` se genera localmente al ejecutar `npm run seed` y no se incluye en el repositorio.
 
 ---
 
@@ -173,7 +184,7 @@ git clone https://github.com/Gabo2077g/aplicaci-n-sqlite.git
 ## 2. Entrar al proyecto
 
 ```bash
-cd backend-sqlite
+cd aplicaci-n-sqlite
 ```
 
 ## 3. Instalar dependencias
@@ -307,6 +318,12 @@ Se contemplan los siguientes casos:
 - Error 500: error interno del servidor.
 
 Las respuestas son enviadas en formato JSON para facilitar su interpretación por parte del cliente.
+
+Al crear o actualizar productos, la API también valida que:
+
+- Los campos de texto no estén vacíos.
+- El precio sea un número mayor o igual a cero.
+- El stock sea un número entero mayor o igual a cero.
 
 ---
 

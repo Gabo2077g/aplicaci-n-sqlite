@@ -7,6 +7,31 @@ const db = require("../db");
 // Crear router
 const router = express.Router();
 
+function validarProducto(producto) {
+  const { nombre, descripcion, precio, stock, categoria } = producto;
+
+  if (
+    typeof nombre !== "string" ||
+    typeof descripcion !== "string" ||
+    typeof categoria !== "string" ||
+    !nombre.trim() ||
+    !descripcion.trim() ||
+    !categoria.trim()
+  ) {
+    return "Nombre, descripcion y categoria deben ser textos no vacios";
+  }
+
+  if (typeof precio !== "number" || !Number.isFinite(precio) || precio < 0) {
+    return "El precio debe ser un numero mayor o igual a cero";
+  }
+
+  if (!Number.isInteger(stock) || stock < 0) {
+    return "El stock debe ser un numero entero mayor o igual a cero";
+  }
+
+  return null;
+}
+
 /*
 ====================================
 OBTENER TODOS LOS PRODUCTOS
@@ -72,15 +97,11 @@ router.post("/", (req, res) => {
       categoria
     } = req.body;
 
-    if (
-      !nombre ||
-      !descripcion ||
-      precio === undefined ||
-      stock === undefined ||
-      !categoria
-    ) {
+    const errorValidacion = validarProducto(req.body);
+
+    if (errorValidacion) {
       return res.status(400).json({
-        mensaje: "Todos los campos son obligatorios"
+        mensaje: errorValidacion
       });
     }
 
@@ -89,11 +110,11 @@ router.post("/", (req, res) => {
       (nombre, descripcion, precio, stock, categoria)
       VALUES (?, ?, ?, ?, ?)
     `).run(
-      nombre,
-      descripcion,
+      nombre.trim(),
+      descripcion.trim(),
       precio,
       stock,
-      categoria
+      categoria.trim()
     );
 
     res.status(201).json({
@@ -127,15 +148,11 @@ router.put("/:id", (req, res) => {
       categoria
     } = req.body;
 
-    if (
-      !nombre ||
-      !descripcion ||
-      precio === undefined ||
-      stock === undefined ||
-      !categoria
-    ) {
+    const errorValidacion = validarProducto(req.body);
+
+    if (errorValidacion) {
       return res.status(400).json({
-        mensaje: "Todos los campos son obligatorios"
+        mensaje: errorValidacion
       });
     }
 
@@ -158,11 +175,11 @@ router.put("/:id", (req, res) => {
           categoria = ?
       WHERE id = ?
     `).run(
-      nombre,
-      descripcion,
+      nombre.trim(),
+      descripcion.trim(),
       precio,
       stock,
-      categoria,
+      categoria.trim(),
       id
     );
 
